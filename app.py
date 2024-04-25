@@ -445,6 +445,7 @@ app.route('/auth/give/<name>', methods = ['POST', 'GET'])(give_auth)
 
 app.route('/auth/give/ban', methods = ['POST', 'GET'])(give_user_ban)
 app.route('/auth/give/ban/<everything:name>', methods = ['POST', 'GET'])(give_user_ban)
+app.route('/auth/give/ban_cidr/<everything:name>', methods = ['POST', 'GET'], defaults = { 'ban_type' : 'cidr' })(give_user_ban)
 app.route('/auth/give/ban_regex/<everything:name>', methods = ['POST', 'GET'], defaults = { 'ban_type' : 'regex' })(give_user_ban)
 app.route('/auth/give/ban_multiple', methods = ['POST', 'GET'], defaults = { 'ban_type' : 'multiple' })(give_user_ban)
 
@@ -673,9 +674,6 @@ app.route('/api/raw_exist/<everything:name>', defaults = { 'exist_check' : 'on',
 app.route('/api/raw_rev/<int(signed = True):rev>/<everything:name>', defaults = { 'db_set' : db_set_str })(api_w_raw)
 app.route('/api/raw/<everything:name>', defaults = { 'db_set' : db_set_str })(api_w_raw)
 
-app.route('/api/doc_star_doc/<int:num>/<everything:name>', defaults = { 'db_set' : db_set_str, 'do_type' : 'star_doc' })(api_w_watch_list)
-app.route('/api/doc_watch_list/<int:num>/<everything:name>', defaults = { 'db_set' : db_set_str })(api_w_watch_list)
-
 app.route('/api/xref/<int:num>/<everything:name>', defaults = { 'db_set' : db_set_str })(api_w_xref)
 app.route('/api/xref_this/<int:num>/<everything:name>', defaults = { 'xref_type' : '2', 'db_set' : db_set_str })(api_w_xref)
 
@@ -735,6 +733,10 @@ app.route('/api/v2/bbs', defaults = { 'db_set' : db_set_str })(api_bbs_list)
 app.route('/api/v2/bbs/main', defaults = { 'db_set' : db_set_str })(api_bbs)
 app.route('/api/v2/bbs/in/<int:bbs_num>/<int:page>', defaults = { 'db_set' : db_set_str })(api_bbs)
 app.route('/api/v2/bbs/w/comment/<int:bbs_num>/<int:post_num>/<tool>', defaults = { 'db_set' : db_set_str })(api_bbs_w_comment_n)
+
+app.route('/api/v2/doc_star_doc/<int:num>/<everything:name>', defaults = { 'db_set' : db_set_str, 'do_type' : 'star_doc' })(api_w_watch_list)
+app.route('/api/v2/doc_watch_list/<int:num>/<everything:name>', defaults = { 'db_set' : db_set_str })(api_w_watch_list)
+app.route('/api/v2/set_reset/<everything:name>', defaults = { 'db_set' : db_set_str })(api_w_set_reset)
 
 # Func-main
 # 여기도 전반적인 조정 시행 예정

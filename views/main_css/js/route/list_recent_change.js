@@ -38,7 +38,7 @@ function opennamu_list_recent_change() {
             data_html += '<a href="/recent_change/1/' + option_list[for_a] + '">(' + option_lang(option_list[for_a], lang) + ')</a> ';
         }
 
-        data_html += '<hr class="main_hr">'
+        data_html += '<hr class="main_hr">';
 
         let date_heading = '';
         for(let for_a = 0; for_a < data.length; for_a++) {
@@ -59,14 +59,21 @@ function opennamu_list_recent_change() {
             right += '</a>';
             right += '<span class="opennamu_popup_footnote" id="opennamu_list_recent_change_' + String(for_a) + '_load" style="display: none;"></span>';
             right += '</span>';
-            right += ' | '
+            right += ' | ';
 
+            let rev = '';
             if(data[for_a][6] !== "") {
-                right += '<span style="color: red;">r' + data[for_a][0] + '</span>';
+                rev += '<span style="color: red;">r' + data[for_a][0] + '</span>';
             } else {
-                right += 'r' + data[for_a][0];
+                rev += 'r' + data[for_a][0];
             }
-            right += ' | '
+
+            if(Number(data[for_a][0]) > 1) {
+                let before_rev = String(Number(data[for_a][0]) - 1);
+                rev = '<a href="/diff/' + before_rev + '/' + data[for_a][0] + '/' + doc_name + '">' + rev + '</a>';
+            }
+
+            right += rev + ' | ';
             
             if(data[for_a][5] === '0') {
                 right += '<span style="color: gray;">' + data[for_a][5] + '</span>';
