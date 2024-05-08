@@ -187,6 +187,7 @@ from route.go_api_list_recent_discuss import api_list_recent_discuss
 from route.go_api_list_recent_block import api_list_recent_block
 from route.go_api_list_recent_edit_request import api_list_recent_edit_request
 from route.go_api_list_old_page import api_list_old_page
+from route.go_api_list_title_index import api_list_title_index
 
 from route.go_api_bbs import api_bbs
 from route.go_api_bbs_list import api_bbs_list
@@ -194,6 +195,8 @@ from route.go_api_bbs_w_comment import api_bbs_w_comment_n
 
 from route.go_api_topic import api_topic
 from route.go_api_topic_list import api_topic_list
+
+from route.go_api_user_setting_editor import api_user_setting_editor
 
 from route.go_api_w_raw import api_w_raw
 from route.go_api_w_random import api_w_random

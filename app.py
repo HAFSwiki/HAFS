@@ -731,6 +731,7 @@ app.route('/api/v2/recent_block/<set_type>/<int:num>', defaults = { 'db_set' : d
 app.route('/api/v2/recent_block/<set_type>/<int:num>/<user_name>', defaults = { 'db_set' : db_set_str })(api_list_recent_block)
 app.route('/api/v2/list/document/old/<int:num>', defaults = { 'db_set' : db_set_str, 'set_type' : 'old' })(api_list_old_page)
 app.route('/api/v2/list/document/new/<int:num>', defaults = { 'db_set' : db_set_str, 'set_type' : 'new' })(api_list_old_page)
+app.route('/api/v2/list/document/<int:num>', defaults = { 'db_set' : db_set_str })(api_list_title_index)
 
 app.route('/api/v2/topic/<int:num>/<set_type>/<everything:name>', defaults = { 'db_set' : db_set_str })(api_topic_list)
 
@@ -742,6 +743,8 @@ app.route('/api/v2/bbs/w/comment/<int:bbs_num>/<int:post_num>/<tool>', defaults 
 app.route('/api/v2/doc_star_doc/<int:num>/<everything:name>', defaults = { 'db_set' : db_set_str, 'do_type' : 'star_doc' })(api_w_watch_list)
 app.route('/api/v2/doc_watch_list/<int:num>/<everything:name>', defaults = { 'db_set' : db_set_str })(api_w_watch_list)
 app.route('/api/v2/set_reset/<everything:name>', defaults = { 'db_set' : db_set_str })(api_w_set_reset)
+
+app.route('/api/v2/user/setting/editor', methods = ['GET', 'POST', 'DELETE'], defaults = { 'db_set' : db_set_str })(api_user_setting_editor)
 
 # Func-main
 # 여기도 전반적인 조정 시행 예정
