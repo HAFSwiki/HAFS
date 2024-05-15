@@ -744,7 +744,13 @@ app.route('/api/v2/doc_star_doc/<int:num>/<everything:name>', defaults = { 'db_s
 app.route('/api/v2/doc_watch_list/<int:num>/<everything:name>', defaults = { 'db_set' : db_set_str })(api_w_watch_list)
 app.route('/api/v2/set_reset/<everything:name>', defaults = { 'db_set' : db_set_str })(api_w_set_reset)
 
+app.route('/api/v2/setting/<name>', methods = ['GET', 'PUT'], defaults = { 'db_set' : db_set_str })(api_setting)
+
 app.route('/api/v2/user/setting/editor', methods = ['GET', 'POST', 'DELETE'], defaults = { 'db_set' : db_set_str })(api_user_setting_editor)
+
+app.route('/api/v2/ip/<everything:data>', defaults = { 'db_set' : db_set_str })(api_func_ip)
+app.route('/api/v2/ip_menu/<everything:ip>', defaults = { 'db_set' : db_set_str, 'option' : 'user' })(api_func_ip_menu)
+app.route('/api/v2/user_menu/<everything:ip>', defaults = { 'db_set' : db_set_str })(api_func_ip_menu)
 
 # Func-main
 # 여기도 전반적인 조정 시행 예정
@@ -778,6 +784,7 @@ app.route('/setting/acl', methods = ['POST', 'GET'])(main_setting_acl)
 app.route('/setting/sitemap', methods = ['POST', 'GET'])(main_setting_sitemap)
 app.route('/setting/sitemap_set', methods = ['POST', 'GET'])(main_setting_sitemap_set)
 app.route('/setting/skin_set', methods = ['POST', 'GET'])(main_setting_skin_set)
+app.route('/setting/404_page', methods = ['POST', 'GET'])(setting_404_page)
 
 app.route('/easter_egg')(main_func_easter_egg)
 
