@@ -706,6 +706,7 @@ def get_default_robots_txt(conn):
         'Disallow: /\n' + \
         'Allow: /$\n' + \
         'Allow: /w/\n' + \
+        'Allow: /bbs/w/\n' + \
         'Allow: /sitemap.xml$\n' + \
         'Allow: /sitemap_*.xml$' + \
     ''
@@ -843,7 +844,10 @@ def get_user_title_list(conn, ip = ''):
 
     curs.execute(db_change('select data from user_set where name = ? and id = ?'), ['challenge_admin', ip])
     if curs.fetchall():
-        user_title['☑️'] = '☑️ admin'
+        user_title['☑️'] = '☑️ before_admin'
+
+    if admin_check(conn, 'all') == 1:
+        user_title['✅'] = '✅ admin'
     
     return user_title
     
@@ -1072,7 +1076,7 @@ def skin_check(conn, set_n = 0):
         return skin
     
 def cache_v():
-    return '.cache_v256'
+    return '.cache_v257'
 
 def wiki_css(data):
     global global_wiki_set
@@ -1111,12 +1115,12 @@ def wiki_css(data):
         data_css += '<script defer src="/views/main_css/js/func/render.js' + data_css_ver + '"></script>'
         
         # Main CSS
-        data_css += '<link rel="stylesheet" href="/views/main_css/css/main.css' + data_css_ver + '">'
+        data_css += '<link rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'" href="/views/main_css/css/main.css' + data_css_ver + '">'
 
         # External CSS
-        data_css += '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />'
-        data_css += '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css" integrity="sha512-hasIneQUHlh06VNBe7f6ZcHmeRTLIaQWFd43YriJ0UND19bvYRauxthDg8E4eVNPm9bRUhr5JGeqH7FRFXQu5g==" crossorigin="anonymous" referrerpolicy="no-referrer" />'
-        data_css += '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.41.0/min/vs/editor/editor.main.min.css" integrity="sha512-MFDhxgOYIqLdcYTXw7en/n5BshKoduTitYmX8TkQ+iJOGjrWusRi8+KmfZOrgaDrCjZSotH2d1U1e/Z1KT6nWw==" crossorigin="anonymous" referrerpolicy="no-referrer" />'
+        data_css += '<link rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />'
+        data_css += '<link rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css" integrity="sha512-hasIneQUHlh06VNBe7f6ZcHmeRTLIaQWFd43YriJ0UND19bvYRauxthDg8E4eVNPm9bRUhr5JGeqH7FRFXQu5g==" crossorigin="anonymous" referrerpolicy="no-referrer" />'
+        data_css += '<link rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.41.0/min/vs/editor/editor.main.min.css" integrity="sha512-MFDhxgOYIqLdcYTXw7en/n5BshKoduTitYmX8TkQ+iJOGjrWusRi8+KmfZOrgaDrCjZSotH2d1U1e/Z1KT6nWw==" crossorigin="anonymous" referrerpolicy="no-referrer" />'
 
         global_wiki_set['main_css'] = data_css
 
@@ -1125,10 +1129,10 @@ def wiki_css(data):
         data_css_dark = global_wiki_set['dark_main_css']
     else:
         # Main CSS
-        data_css_dark += '<link rel="stylesheet" href="/views/main_css/css/sub/dark.css' + data_css_ver + '">'
+        data_css_dark += '<link rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'" href="/views/main_css/css/sub/dark.css' + data_css_ver + '">'
 
         # External CSS
-        data_css_dark += '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/dark.min.css" integrity="sha512-bfLTSZK4qMP/TWeS1XJAR/VDX0Uhe84nN5YmpKk5x8lMkV0D+LwbuxaJMYTPIV13FzEv4CUOhHoc+xZBDgG9QA==" crossorigin="anonymous" referrerpolicy="no-referrer" />'
+        data_css_dark += '<link rel="preload" as="style" onload="this.onload=null;this.rel=\'stylesheet\'" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/dark.min.css" integrity="sha512-bfLTSZK4qMP/TWeS1XJAR/VDX0Uhe84nN5YmpKk5x8lMkV0D+LwbuxaJMYTPIV13FzEv4CUOhHoc+xZBDgG9QA==" crossorigin="anonymous" referrerpolicy="no-referrer" />'
 
         global_wiki_set['dark_main_css'] = data_css_dark
 
@@ -1174,6 +1178,12 @@ def wiki_set(conn):
     curs.execute(db_change("select data from other where name = 'head' and coverage = ?"), [skin_name])
     db_data = curs.fetchall()
     head_data += db_data[0][0] if db_data and db_data[0][0] != '' else ''
+
+    darkmode = flask.request.cookies.get('main_css_darkmode', '0')
+    if darkmode == '1':
+        curs.execute(db_change("select data from other where name = 'head' and coverage = ?"), [skin_name + '-cssdark'])
+        db_data = curs.fetchall()
+        head_data += db_data[0][0] if db_data and db_data[0][0] != '' else ''
 
     data_list += [head_data]
 
@@ -1831,7 +1841,7 @@ def admin_check(conn, num = None, what = None, name = ''):
 
     return 0
 
-def acl_check(conn, name = '', tool = '', topic_num = '1'):
+def acl_check(conn, name = '', tool = '', topic_num = ''):
     curs = conn.cursor()
 
     if name == None:
@@ -1944,7 +1954,10 @@ def acl_check(conn, name = '', tool = '', topic_num = '1'):
             num = 5
         elif tool == 'vote':
             if i == 0:
-                curs.execute(db_change('select acl from vote where id = ? and user = ""'), [topic_num])
+                if topic_num != '':
+                    curs.execute(db_change('select acl from vote where id = ? and user = ""'), [topic_num])
+                else:
+                    continue
             else:
                 curs.execute(db_change('select data from other where name = "vote_acl"'))
 
@@ -2308,7 +2321,7 @@ def do_edit_send_check(conn, data):
     curs.execute(db_change('select data from other where name = "edit_bottom_compulsion"'))
     db_data = curs.fetchall()
     if db_data and db_data[0][0] != '':
-        if acl_check(conn, None, 'edit_bottom_compulsion') == 1:
+        if acl_check(conn, '', 'edit_bottom_compulsion') == 1:
             if data == '':
                 return 1
     

@@ -8,15 +8,15 @@
             <title>{{imp[0]}} - {{imp[1][0]}}</title>
         {% endif %}
         {{imp[3][3]|safe}}
-        <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT/fonts/static/woff2/SUIT.css" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <script defer src="https://code.iconify.design/1/1.0.3/iconify.min.js"></script>
         <script defer src="/views/ringo/js/main.js.cache_v2"></script>
         <script defer src="/views/ringo/js/sidebar.js.cache_v3"></script>
-        <script defer src="/views/ringo/js/skin_set.js.cache_v5"></script>
-        <link rel="stylesheet" href="/views/ringo/css/main.css.cache_v8">
+        <script defer src="/views/ringo/js/skin_set.js.cache_v6"></script>
+        <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/views/ringo/css/main.css.cache_v9">
         {% if request.cookies.get('main_css_darkmode', '') == '1' %}
             {{imp[3][5]|safe}}
-            <link rel="stylesheet" href="/views/ringo/css/dark.css.cache_v2">
+            <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/views/ringo/css/dark.css.cache_v2">
         {% endif %}
         <style id="ringo_add_style"></style>
         <link rel="shortcut icon" href="/views/main_css/file/favicon.ico.cache_v1">
@@ -227,11 +227,10 @@
                     {{imp[1][1]|safe}}
                     <br>
                     <br>
-                    <a href="https://github.com/openNAMU/openNAMU"><img id="b_logo" src="/views/main_css/file/s_logo.png"></a>
+                    <a href="https://github.com/openNAMU/openNAMU"><img alt="b_logo" id="b_logo" src="/views/main_css/file/s_logo.png"></a>
                 </article>
             </footer>
         </section>
-        <div class="aside_width">　</div>
         <aside class="do_fixed">
             {% if imp[1][7][1] == '' %}
                 <button id="side_button_1" class="side_button selected">{{'edit'|load_lang}}</button><!--
@@ -266,7 +265,7 @@
             {{imp[1][1]|safe}}
             <br>
             <br>
-            <a href="https://github.com/openNAMU/openNAMU"><img id="b_logo" src="/views/main_css/file/logo.svg"></a>
+            <a href="https://github.com/openNAMU/openNAMU"><img alt="b_logo" id="b_logo" src="/views/main_css/file/logo.svg"></a>
         </footer>
     </body>
 </html>
